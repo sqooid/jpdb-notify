@@ -23,8 +23,7 @@ fun scan(applicationContext: Context): Boolean {
     if (cookies.isEmpty()) {
         return true
     }
-//    val client = OkHttpClient()
-    val client = OkH
+    val client = OkHttpClient()
     val request = Request.Builder().url(Constants.JPDB_HOME_URL)
         .header("Cookie", cookies)
         .header(
