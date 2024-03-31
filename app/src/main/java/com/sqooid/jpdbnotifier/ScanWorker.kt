@@ -54,6 +54,9 @@ fun scan(applicationContext: Context): Boolean {
 
         // Skip notification
         if (count < threshold) {
+            with(NotificationManagerCompat.from(applicationContext)) {
+                cancel(notificationId)
+            }
             return true
         }
 
