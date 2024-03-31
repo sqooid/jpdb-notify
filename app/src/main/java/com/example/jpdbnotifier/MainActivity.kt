@@ -3,14 +3,11 @@ package com.example.jpdbnotifier
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.content.SharedPreferences
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.webkit.CookieManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,7 +26,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.work.PeriodicWorkRequest
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.example.jpdbnotifier.Constants.CHANNEL_ID
@@ -43,7 +39,6 @@ import com.multiplatform.webview.web.rememberWebViewState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.time.Duration
 import java.util.UUID
 
@@ -76,7 +71,7 @@ class MainActivity : ComponentActivity() {
             }
 
             if (authCookies.value.isNotEmpty()) {
-
+                createWorker(context)
             }
 
             JPDBNotifierTheme {
@@ -96,7 +91,6 @@ class MainActivity : ComponentActivity() {
                                 LoginButton(onClick = {
                                     Log.d("app", "Showing login page")
                                     showLoginPage.value = true
-                                    createWorker(context)
                                 })
                             } else {
                                 LogoutButton(onClick = {
@@ -143,7 +137,7 @@ class MainActivity : ComponentActivity() {
                                     scan(context)
                                 }
                             }) {
-                                Text(text = "test")
+                                Text(text = "Test notification")
                             }
                         }
                     } else {
@@ -198,6 +192,7 @@ fun cancelWorker(context: Context) {
     val workManager = WorkManager.getInstance(context)
     val prefs = context.getSharedPreferences(Constants.SHARED_PREFS, Context.MODE_PRIVATE)
     val existingId = prefs.getString(Constants.WORK_REQUEST_ID, "") ?: ""
+    prefs.edit().putString(Constants.WORK_REQUEST_ID, "").apply()
     Log.d("app", "Cancelled worker id: $existingId")
     workManager.cancelWorkById(UUID.fromString(existingId))
 }

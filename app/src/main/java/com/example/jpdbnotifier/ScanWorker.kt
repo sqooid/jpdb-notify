@@ -7,14 +7,10 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.work.Data
-import androidx.work.ListenableWorker
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import okhttp3.ConnectionSpec
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import java.lang.Exception
 
 fun scan(applicationContext: Context): Boolean {
     val prefs =
@@ -30,21 +26,27 @@ fun scan(applicationContext: Context): Boolean {
             "User-Agent",
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
         )
-        .header(
-            "Accept",
-            "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8"
-        )
-        .header("Accept-Encodings", "gzip, deflate, br, zstd")
         .build();
 
     try {
         val response = client.newCall(request).execute()
         Log.d("app", "response: $response")
         Log.d("app", "body: ${response.body}")
-        val body = response.body?.string() ?: ""
+        val body = response.body?.string() ?: return false
         Log.d("app", "body: $body")
         val re = Regex("Learn \\(<span style=\"color: red;\">(\\d+)</span>")
-        val countMatch = re.find(body) ?: return false
+        val countMatch = re.find(body)
+
+        val notificationId = 0
+
+        // Assume this means there are no cards ready
+        if (countMatch == null) {
+            with(NotificationManagerCompat.from(applicationContext)) {
+                cancel(notificationId)
+            }
+            return true
+        }
+
         Log.d("app", "match: $countMatch")
         val countString = countMatch.groupValues.getOrElse(1) { "" }
         val count = countString.toIntOrNull() ?: return false
@@ -55,7 +57,6 @@ fun scan(applicationContext: Context): Boolean {
             return true
         }
 
-        val notificationId = 0
         val builder = NotificationCompat.Builder(applicationContext, Constants.CHANNEL_ID)
             .setSmallIcon(R.drawable.jpdb)
             .setContentTitle("jpdb.io $count cards ready for review")
