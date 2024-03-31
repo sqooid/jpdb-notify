@@ -1,4 +1,4 @@
-package com.example.jpdbnotifier
+package com.sqooid.jpdbnotifier
 
 object Constants {
     const val SHARED_PREFS = "prefs"

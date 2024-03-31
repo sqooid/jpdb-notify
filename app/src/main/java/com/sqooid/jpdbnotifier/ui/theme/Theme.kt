@@ -1,4 +1,4 @@
-package com.example.jpdbnotifier.ui.theme
+package com.sqooid.jpdbnotifier.ui.theme
 
 import android.app.Activity
 import android.os.Build

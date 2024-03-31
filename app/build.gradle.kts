@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.jpdbnotifier"
+    namespace = "com.sqooid.jpdbnotifier"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.jpdbnotifier"
+        applicationId = "com.sqooid.jpdbnotifier"
         minSdk = 26
         targetSdk = 34
         versionCode = 1

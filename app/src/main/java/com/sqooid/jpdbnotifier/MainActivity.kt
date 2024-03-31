@@ -1,4 +1,4 @@
-package com.example.jpdbnotifier
+package com.sqooid.jpdbnotifier
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -28,14 +28,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.example.jpdbnotifier.Constants.CHANNEL_ID
-import com.example.jpdbnotifier.ui.theme.JPDBNotifierTheme
 import com.multiplatform.webview.web.LoadingState
 import com.multiplatform.webview.web.WebView
 import com.multiplatform.webview.web.WebViewNavigator
 import com.multiplatform.webview.web.WebViewState
 import com.multiplatform.webview.web.rememberWebViewNavigator
 import com.multiplatform.webview.web.rememberWebViewState
+import com.sqooid.jpdbnotifier.Constants.CHANNEL_ID
+import com.sqooid.jpdbnotifier.ui.theme.JPDBNotifierTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

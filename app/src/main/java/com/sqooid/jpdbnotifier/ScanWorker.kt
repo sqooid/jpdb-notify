@@ -1,4 +1,4 @@
-package com.example.jpdbnotifier
+package com.sqooid.jpdbnotifier
 
 import android.Manifest
 import android.content.Context
