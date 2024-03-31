@@ -150,7 +150,7 @@ class MainActivity : ComponentActivity() {
                         }
                         val lastLoadedUrl = webViewState.lastLoadedUrl
                         if (lastLoadedUrl == Constants.JPDB_HOME_URL) {
-                            showLoginPage.value = false;
+                            showLoginPage.value = false
                             authCookies.value = getAuthCookies()
                             Log.d("app", "Auth cookies: ${authCookies.value}")
                             prefs.edit().putString(Constants.PREFS_COOKIES_KEY, authCookies.value)
@@ -199,10 +199,10 @@ fun cancelWorker(context: Context) {
 
 fun getAuthCookies(): String {
     val cookieManager = CookieManager.getInstance()
-    try {
-        return cookieManager.getCookie(Constants.JPDB_HOME_URL)
+    return try {
+        cookieManager.getCookie(Constants.JPDB_HOME_URL)
     } catch(e: Exception) {
-        return ""
+        ""
     }
 }
 

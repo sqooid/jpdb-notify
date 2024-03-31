@@ -14,7 +14,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun SettingLabel(text: String, description: String = "", modifier: Modifier = Modifier) {
+fun SettingLabel(text: String, modifier: Modifier = Modifier, description: String = "") {
     Column {
         Text(text = text, modifier = modifier)
         if (description != "") {
